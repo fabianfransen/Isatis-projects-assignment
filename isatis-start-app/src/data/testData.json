@@ -1,0 +1,19 @@
+[
+    {
+        "ID": 1,
+        "ensemblID": "ENSG00000244734",
+        "geneName": "HBB hemoglobin subunit beta",
+        "speciesName": "Homo sapiens",
+        "source": "NCBI"
+
+  
+    },
+    {
+        "ID": 2,
+        "ensemblID":"ENSG00000206172",
+        "geneName": "hemoglobin subunit alpha 1",
+        "speciesName": "Homo sapiens",
+        "source": "NCBI"
+    }
+  
+]
