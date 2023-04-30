@@ -7,11 +7,19 @@ class ComponentDetail extends Component {
         super(props)
         this.ensembleIDClickEvent = this.ensembleIDClickEvent.bind(this)
         this.toggleContent = this.toggleContent.bind(this)
+        this.removeContent = this.removeContent.bind(this)
         this.state = {
             showContent: true,
             thisGene: null
         }
+    
+    
 
+    }
+    removeContent (event){
+        if (this.props.didHandleRemove){
+            this.props.didHandleRemove(this.props.gene)
+        }
     }
     ensembleIDClickEvent(event){
         event.preventDefault()
@@ -28,7 +36,7 @@ class ComponentDetail extends Component {
         this.setState({thisGene: ensemblLink})
         const {dataCallback} = this.props
         if (dataCallback !== undefined) {
-            dataCallback("callback")
+            dataCallback(ensemblLink)
         }
     }
 
@@ -39,6 +47,7 @@ class ComponentDetail extends Component {
             showContent: !this.state.showContent
         })
     }
+
     componentDidMount(){
         const {gene} = this.props
         this.setState({thisGene: gene})
@@ -55,6 +64,8 @@ class ComponentDetail extends Component {
                     {/* <p className={` ${showContent === true ? 'd-block' : 'd-none' }`}>{gene.geneName}</p>    */}
                     {showContent === true ? <p>{thisGene.geneName} <br></br> {thisGene.speciesName} <br></br> {thisGene.source}</p> : ""}
                     <button onClick={this.toggleContent}> Toggle content display </button>
+                    <button onClick={this.removeContent}> Remove content </button>
+
                 </div>
             : ""}
             </div>

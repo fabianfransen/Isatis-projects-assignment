@@ -9,9 +9,17 @@ class Component1 extends Component {
     constructor(props){
         super(props)
         this.dataCallbackHandler = this.dataCallbackHandler.bind(this)
+        this.handleRemoveContent = this.handleRemoveContent.bind(this)
         this.state = {
             geneList: []
         }
+    }
+    handleRemoveContent(geneItem){
+        let currentGene = this.state.geneList
+        currentGene.pop(geneItem)
+        this.setState({
+            geneItem: currentGene
+        })
     }
     dataCallbackHandler(geneItem){
         // alert(text)
@@ -36,7 +44,8 @@ class Component1 extends Component {
                 {TestData.map((savedGene, index)=>{
                     return <ComponentDetail 
                     gene={savedGene} 
-                    key={`gene-list-key ${index}`} 
+                    key={`gene-list-key ${index}`}  
+                    didHandleRemove={this.handleRemoveContent}
                     dataCallback={this.dataCallbackHandler} />
                 })}
             </div>
