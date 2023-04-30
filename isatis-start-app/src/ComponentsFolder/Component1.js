@@ -9,12 +9,27 @@ class Component1 extends Component {
     constructor(props){
         super(props)
         this.dataCallbackHandler = this.dataCallbackHandler.bind(this)
+        this.state = {
+            geneList: []
+        }
     }
-    dataCallbackHandler(text){
+    dataCallbackHandler(geneItem){
         // alert(text)
         // console.log(this)
+        let currentGene = this.state.geneList
+        currentGene.push(geneItem)
+        this.setState({
+            geneItem: currentGene
+        })
+
+    }
+    componentDidMount(){
+        this.setState({
+            geneList: TestData
+        })
     }
     render () {
+        const {geneList} = this.state
         return (
             <div >
                 <h1> Hello there</h1>
