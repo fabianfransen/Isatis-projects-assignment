@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D7Lf52m8T3Qp1cUMSuLx48MOGOLVorcO/gosbHnttK3201SJ32EjWis192vtezxZ7wkTTSvqQUlwOfXkDre2Vw==",
+  "dgSpecHash": "KuIF2ngn3QKzhYp0srZcNpkRiI0kp0eI5q7xA/qKvN9ozPWkApv/YGeXWqEC4yC/h9Oaa41vFJcQH7xRTna3xA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\fabia\\source\\repos\\TodoApi\\TodoApi\\TodoApi.csproj",
+  "projectFilePath": "C:\\Users\\fabia\\OneDrive\\Documenten\\GitHub\\Isatis-projects-assignment\\TodoApi\\TodoApi\\TodoApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fabia\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\fabia\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
