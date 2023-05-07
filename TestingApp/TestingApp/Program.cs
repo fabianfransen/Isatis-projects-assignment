@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TestingApp.Data;
 using TestingApp.Models;
+using TestingApp.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TestingAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TestingAppContext") ?? throw new InvalidOperationException("Connection string 'TestingAppContext' not found.")));
@@ -10,16 +12,16 @@ builder.Services.AddDbContext<TestingAppContext>(options =>
 
 builder.Services.AddControllersWithViews();
 
-
+builder.Services.AddScoped<IPlanningRepository, PlanningRepository>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
 
-    SeedData.Initialize(services);
-}
+//    SeedData.Initialize(services);
+//}
 
 
 // Configure the HTTP request pipeline.

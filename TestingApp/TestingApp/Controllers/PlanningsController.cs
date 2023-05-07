@@ -7,157 +7,161 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TestingApp.Data;
 using TestingApp.Models;
+using TestingApp.Repository;
 
 namespace TestingApp.Controllers
 {
+    [ApiController]
+    [Route("planning")]
     public class PlanningsController : Controller
     {
-        private readonly TestingAppContext _context;
-
-        public PlanningsController(TestingAppContext context)
+        private IPlanningRepository planningRepository;
+        public PlanningsController(IPlanningRepository p)
         {
-            _context = context;
+            planningRepository =  p;
         }
 
         // GET: Plannings
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-              return _context.Planning != null ? 
-                          View(await _context.Planning.ToListAsync()) :
+            IEnumerable<Planning> plannings = await planningRepository.GetAll();
+            return plannings.Any() ?   
+                          View(plannings.ToArray()) :
                           Problem("Entity set 'TestingAppContext.Planning'  is null.");
         }
 
         // GET: Plannings/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Planning == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Planning == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var planning = await _context.Planning
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (planning == null)
-            {
-                return NotFound();
-            }
+        //    var planning = await _context.Planning
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (planning == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(planning);
-        }
+        //    return View(planning);
+        //}
 
         // GET: Plannings/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: Plannings/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Week,Hours")] Planning planning)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(planning);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(planning);
-        }
+        //// POST: Plannings/Create
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,Week,Hours")] Planning planning)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(planning);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(planning);
+        //}
 
-        // GET: Plannings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Planning == null)
-            {
-                return NotFound();
-            }
+        //// GET: Plannings/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null || _context.Planning == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var planning = await _context.Planning.FindAsync(id);
-            if (planning == null)
-            {
-                return NotFound();
-            }
-            return View(planning);
-        }
+        //    var planning = await _context.Planning.FindAsync(id);
+        //    if (planning == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(planning);
+        //}
 
-        // POST: Plannings/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Week,Hours")] Planning planning)
-        {
-            if (id != planning.Id)
-            {
-                return NotFound();
-            }
+        //// POST: Plannings/Edit/5
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Week,Hours")] Planning planning)
+        //{
+        //    if (id != planning.Id)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(planning);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PlanningExists(planning.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(planning);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(planning);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!PlanningExists(planning.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(planning);
+        //}
 
-        // GET: Plannings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Planning == null)
-            {
-                return NotFound();
-            }
+        //// GET: Plannings/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null || _context.Planning == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var planning = await _context.Planning
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (planning == null)
-            {
-                return NotFound();
-            }
+        //    var planning = await _context.Planning
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (planning == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(planning);
-        }
+        //    return View(planning);
+        //}
 
-        // POST: Plannings/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Planning == null)
-            {
-                return Problem("Entity set 'TestingAppContext.Planning'  is null.");
-            }
-            var planning = await _context.Planning.FindAsync(id);
-            if (planning != null)
-            {
-                _context.Planning.Remove(planning);
-            }
+        //// POST: Plannings/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    if (_context.Planning == null)
+        //    {
+        //        return Problem("Entity set 'TestingAppContext.Planning'  is null.");
+        //    }
+        //    var planning = await _context.Planning.FindAsync(id);
+        //    if (planning != null)
+        //    {
+        //        _context.Planning.Remove(planning);
+        //    }
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
-        private bool PlanningExists(int id)
-        {
-          return (_context.Planning?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        //private bool PlanningExists(int id)
+        //{
+        //  return (_context.Planning?.Any(e => e.Id == id)).GetValueOrDefault();
+        //}
     }
 }

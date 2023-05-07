@@ -1,33 +1,38 @@
-import React, { Component } from 'react';
+import react, { Component } from 'react';
 
 export class Personnel extends Component {
-    static displayName = Personnel.name;
 
     constructor(props) {
         super(props);
         this.state = {
-            currentPersonnel: null
+            plannings: [],
+            loading: true
         };
-        this.viewPersonnel = this.viewPersonnel.bind(this);
     }
 
-    viewPersonnel() {
-        this.setState({
-            currentPersonnel: this.state.currentPersonnel + "doe iets met de state voor dit punt"
-        })
+    componentDidMount() {
+        this.populateData();
     }
 
     render() {
         return (
             <div>
-                <h1>Schedule</h1>
+                <h1>schedule</h1>
 
-                <p>This is a simple example of a React component.</p>
+                <p>this is a simple example of a react component.</p>
 
-                <p aria-live="polite">Current Personnel: <strong>{this.state.currentPersonnel}</strong></p>
+                <p aria-live="polite">current personnel: <strong>{this.state.plannings.length}</strong></p>
 
-                <button className="btn btn-primary" onClick={this.viewPersonnel}>View</button>
             </div>
         );
     }
+    async populateData() {
+        const response = await fetch('planning');
+        const data = await response.json();
+        this.setState({ plannings: data.plannings, loading: false });
+    }
 }
+  
+
+
+
