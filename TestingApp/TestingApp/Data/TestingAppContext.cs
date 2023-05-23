@@ -24,6 +24,8 @@ namespace TestingApp.Data
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Planning>()
+            .ToTable("Planning");
 
             modelBuilder.Entity<Project>().HasData(
             new Project

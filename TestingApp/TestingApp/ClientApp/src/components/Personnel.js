@@ -1,4 +1,5 @@
 import react, { Component } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 export class Personnel extends Component {
 
@@ -27,9 +28,14 @@ export class Personnel extends Component {
         );
     }
     async populateData() {
-        const response = await fetch('planning');
-        const data = await response.json();
-        this.setState({ plannings: data.plannings, loading: false });
+        const response = await fetch('weatherforecast');
+        try {
+            const data = await response.json();
+            this.setState({ plannings: data, loading: false });
+        }
+        catch (error) {
+            console.error(error);
+        }
     }
 }
   

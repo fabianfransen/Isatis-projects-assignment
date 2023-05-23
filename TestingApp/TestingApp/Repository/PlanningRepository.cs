@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TestingApp.Data;
 using TestingApp.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestingApp.Repository
+    
 {
+
+    [Table("Planning")]
     public class PlanningRepository: IPlanningRepository
     {
         protected readonly TestingAppContext _context;
@@ -25,10 +29,11 @@ namespace TestingApp.Repository
 
         public async  Task<IEnumerable<Planning>> GetAll()
         {
-            return await _context.Plannings
-                .Include(planning => planning.Employee)
-                .Include(planning => planning.Project)
-                .ToListAsync();
+            return await _context.Plannings.ToListAsync();
+            //return await _context.Plannings
+            //    .Include(planning => planning.Employee)
+            //    .Include(planning => planning.Project)
+            //    .ToListAsync();
         }
 
         public Planning GetById(int Id)

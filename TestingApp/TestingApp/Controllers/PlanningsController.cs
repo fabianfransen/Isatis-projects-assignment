@@ -2,34 +2,58 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TestingApp.Data;
 using TestingApp.Models;
 using TestingApp.Repository;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace TestingApp.Controllers
 {
     [ApiController]
-    [Route("planning")]
-    public class PlanningsController : Controller
+    [Route("[controller]")]
+    public class PlanningsController : ControllerBase
     {
-        private IPlanningRepository planningRepository;
+        private readonly IPlanningRepository _planningRepository;
         public PlanningsController(IPlanningRepository p)
         {
-            planningRepository =  p;
+            _planningRepository =  p;
         }
 
         // GET: Plannings
+
+
+
+        //public JsonResult Get()
+        //{
+        //    string query = @"select Id, Name from dbo.Planning";
+        //    DataTable table = new DataTable();
+        //    string sqlDataSource = _planningRepository.GetConnectionString("TestingAppContext");
+        //}
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            IEnumerable<Planning> plannings = await planningRepository.GetAll();
-            return plannings.Any() ?   
-                          View(plannings.ToArray()) :
-                          Problem("Entity set 'TestingAppContext.Planning'  is null.");
+            IEnumerable<Planning> plannings = await _planningRepository.GetAll();
+            return Ok( plannings.ToArray());
+            //return plannings.Any() ?
+            //              (plannings.ToArray()) :
+            //              Problem("Entity set 'TestingAppContext.Planning'  is null.");
         }
+        //public IEnumerable<Planning> Get()
+        //{
+        //    return Enumerable.Range(1, 5).Select(index => new Planning
+        //    {
+        //        Week = 10,
+        //        Hours = 500
+        //    })
+        //    .ToArray();
+        //}
 
         // GET: Plannings/Details/5
         //public async Task<IActionResult> Details(int? id)
@@ -154,7 +178,7 @@ namespace TestingApp.Controllers
         //    {
         //        _context.Planning.Remove(planning);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}
